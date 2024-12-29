@@ -13,7 +13,6 @@ const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 sidebarBtn.addEventListener("click", function () {
   elementToggleFunc(sidebar);
   console.log("hii");
-  
 });
 
 // testimonials variables
@@ -44,7 +43,7 @@ for (let i = 0; i < testimonialsItem.length; i++) {
     modalText.innerHTML = this.querySelector(
       "[data-testimonials-text]"
     ).innerHTML;
-console.log("hello");
+    console.log("hello");
 
     testimonialsModalFunc();
   });
@@ -61,20 +60,20 @@ const selectValue = document.querySelector("[data-selecct-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
 // Ensure the DOM is fully loaded before executing the script
-document.addEventListener("DOMContentLoaded", function() {
-    // Select the element (e.g., a button or a dropdown)
-    const select = document.getElementById('mySelect'); // Replace 'mySelect' with your element's ID
+document.addEventListener("DOMContentLoaded", function () {
+  // Select the element (e.g., a button or a dropdown)
+  const select = document.getElementById("mySelect"); // Replace 'mySelect' with your element's ID
 
-    // Check if the element exists
-    if (select) {
-        // Add a click event listener
-        select.addEventListener("click", function () {
-            elementToggleFunc(this); // Ensure this function is defined
-            console.log("Element clicked: ", this); // More descriptive console log
-        });
-    } else {
-        console.error("Element with ID 'mySelect' not found.");
-    }
+  // Check if the element exists
+  if (select) {
+    // Add a click event listener
+    select.addEventListener("click", function () {
+      elementToggleFunc(this); // Ensure this function is defined
+      console.log("Element clicked: ", this); // More descriptive console log
+    });
+  } else {
+    console.error("Element with ID 'mySelect' not found.");
+  }
 });
 
 // Example of the elementToggleFunc function
@@ -91,7 +90,6 @@ for (let i = 0; i < selectItems.length; i++) {
     elementToggleFunc(select);
     filterFunc(selectedValue);
     console.log("namesta");
-    
   });
 }
 
@@ -118,7 +116,7 @@ for (let i = 0; i < filterBtn.length; i++) {
     let selectedValue = this.innerText.toLowerCase();
     selectValue.innerText = this.innerText;
     filterFunc(selectedValue);
-console.log("teri");
+    console.log("teri");
 
     lastClickedBtn.classList.remove("active");
     this.classList.add("active");
@@ -147,18 +145,41 @@ for (let i = 0; i < formInputs.length; i++) {
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
-    for (let i = 0; i < pages.length; i++) {
-      if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
-      }
+// Add the Resume button to the navigation links handling
+const resumeButton = document.getElementById("mySelect");
+
+// Function to handle page navigation
+function navigateToPage(pageName) {
+  for (let i = 0; i < pages.length; i++) {
+    if (pageName.toLowerCase() === pages[i].dataset.page) {
+      pages[i].classList.add("active");
+      // Find and activate the corresponding nav link
+      navigationLinks.forEach((link) => {
+        if (link.innerHTML.toLowerCase() === pageName.toLowerCase()) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+      window.scrollTo(0, 0);
+    } else {
+      pages[i].classList.remove("active");
     }
+  }
+}
+
+// Add event listeners to all nav links
+navigationLinks.forEach((link) => {
+  link.addEventListener("click", function () {
+    navigateToPage(this.innerHTML);
+  });
+});
+
+// Add event listener for the Resume button
+if (resumeButton) {
+  resumeButton.addEventListener("click", function () {
+    navigateToPage("resume");
+    // Remove active class from other navigation links
+    navigationLinks.forEach((link) => link.classList.remove("active"));
   });
 }
